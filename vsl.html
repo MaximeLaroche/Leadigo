@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leadigo VSL | Performance-Based Cold Email</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0f172a; /* Slate 900 */
+            color: #f8fafc; /* Slate 50 */
+            overflow-x: hidden;
+        }
+
+        /* Gradient mesh background */
+        .bg-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: 
+                radial-gradient(circle at 15% 50%, rgba(37, 99, 235, 0.08), transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.08), transparent 25%);
+            z-index: -1;
+        }
+
+        /* Slide specific styling */
+        .vsl-slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 1rem;
+            position: relative;
+        }
+
+        /* Scroll reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* Video Thumbnail styling */
+        .vid-thumb {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .vid-thumb:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.3);
+        }
+        .play-btn {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+        }
+        .vid-thumb:hover .play-btn {
+            background: rgba(37, 99, 235, 0.8);
+            transform: scale(1.1);
+        }
+
+        /* Progress Bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: #3b82f6;
+            z-index: 50;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-500 selection:text-white">
+
+    <div id="progress-bar"></div>
+    <div class="bg-mesh"></div>
+
+    <main class="max-w-6xl mx-auto">
+        
+        <section class="vsl-slide" id="slide-1">
+            <div class="text-center max-w-4xl mx-auto reveal">
+                <span class="text-brand-400 font-semibold tracking-wider uppercase text-sm mb-4 block">The Ultimate B2B Growth Engine</span>
+                <h1 class="text-5xl md:text-6xl font-extrabold leading-tight mb-8">
+                    What If You Could Add <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-400 to-blue-300">10-25 Qualified Sales Calls</span> to Your Calendar Every Month?
+                </h1>
+                <p class="text-xl text-slate-300 mb-10 font-light">
+                    — Without Spending a Dime Unless They Actually Show Up.
+                </p>
+                <div class="inline-block bg-slate-800/50 border border-slate-700 rounded-2xl p-6 mb-12 shadow-xl backdrop-blur-sm reveal reveal-delay-1">
+                    <p class="text-lg font-medium text-slate-200">
+                        <i class="fa-solid fa-shield-halved text-brand-400 mr-2"></i> No risk. You only pay when a qualified buyer books a call with you. Every payment you make means you've already made money.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Fithive Video Thumbnail -->
+            <div class="max-w-3xl mx-auto w-full reveal reveal-delay-2">
+                <p class="text-center text-slate-400 mb-4 text-sm font-semibold uppercase tracking-widest">See How Sunny Stuart Did It With Fithive</p>
+                <a href="https://www.youtube.com/watch?v=PWGK9eLd56g" target="_blank" class="vid-thumb block relative rounded-2xl overflow-hidden border border-slate-700 shadow-2xl">
+                    <img src="https://img.youtube.com/vi/PWGK9eLd56g/maxresdefault.jpg" alt="Fithive Case Study" class="w-full h-auto object-cover opacity-80">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="play-btn w-20 h-20 rounded-full flex items-center justify-center border border-white/20">
+                            <i class="fa-solid fa-play text-white text-3xl ml-1"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="vsl-slide" id="slide-2">
+            <div class="max-w-3xl mx-auto w-full">
+                <h2 class="text-4xl font-bold mb-12 text-center reveal">What We're Covering Today</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50 reveal reveal-delay-1 flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-brand-400 font-bold">1</div>
+                        <p class="font-medium text-slate-200">The Problem: Unpredictable Pipeline</p>
+                    </div>
+                    <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50 reveal reveal-delay-1 flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-brand-400 font-bold">2</div>
+                        <p class="font-medium text-slate-200">The Solution: Performance Cold Email</p>
+                    </div>
+                    <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50 reveal reveal-delay-2 flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-brand-400 font-bold">3</div>
+                        <p class="font-medium text-slate-200">The Proof: Why Your Competitors Do It</p>
+                    </div>
+                    <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50 reveal reveal-delay-2 flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-brand-400 font-bold">4</div>
+                        <p class="font-medium text-slate-200">The Math: What You're Leaving Behind</p>
+                    </div>
+                    <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50 reveal reveal-delay-3 flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-brand-400 font-bold">5</div>
+                        <p class="font-medium text-slate-200">How It Works: The 4-Step System</p>
+                    </div>
+                    <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50 reveal reveal-delay-3 flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-brand-400 font-bold">6</div>
+                        <p class="font-medium text-slate-200">What You Get: The Full Build-Out</p>
+                    </div>
+                    <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50 reveal reveal-delay-4 flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-brand-400 font-bold">7</div>
+                        <p class="font-medium text-slate-200">Your Questions, Answered</p>
+                    </div>
+                    <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700/50 reveal reveal-delay-4 flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-full bg-brand-500 flex items-center justify-center text-white font-bold">8</div>
+                        <p class="font-bold text-white">Next Steps: Strategy Call</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="vsl-slide" id="slide-3">
+            <div class="max-w-4xl mx-auto text-center">
+                <span class="text-red-400 font-semibold tracking-wider uppercase text-sm mb-4 block reveal">The Problem</span>
+                <h2 class="text-5xl font-bold mb-10 reveal reveal-delay-1">Let Me Ask You Something...</h2>
+                
+                <div class="bg-slate-800/60 border-l-4 border-red-500 p-8 rounded-r-2xl mb-10 text-left reveal reveal-delay-2">
+                    <p class="text-2xl font-light leading-relaxed">
+                        "How many <strong class="text-white">qualified sales calls</strong> did you have on your calendar last month?"
+                    </p>
+                </div>
+
+                <p class="text-xl text-slate-300 reveal reveal-delay-3 mb-8">
+                    If the answer is less than 20, <span class="text-white font-semibold">you're leaving six figures on the table.</span> And I'm going to prove it to you.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left reveal reveal-delay-4">
+                    <div class="p-6 bg-slate-800/30 rounded-xl border border-slate-700/50">
+                        <i class="fa-solid fa-bullhorn text-2xl text-slate-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg mb-2">Running Ads</h3>
+                        <p class="text-sm text-slate-400">Expensive and constantly changing algorithms.</p>
+                    </div>
+                    <div class="p-6 bg-slate-800/30 rounded-xl border border-slate-700/50">
+                        <i class="fa-brands fa-linkedin text-2xl text-slate-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg mb-2">Posting on LinkedIn</h3>
+                        <p class="text-sm text-slate-400">Great for brand, but unpredictable lead flow.</p>
+                    </div>
+                    <div class="p-6 bg-slate-800/30 rounded-xl border border-slate-700/50">
+                        <i class="fa-solid fa-users text-2xl text-slate-400 mb-4"></i>
+                        <h3 class="font-semibold text-lg mb-2">Networking & Referrals</h3>
+                        <p class="text-sm text-slate-400">High quality, but entirely out of your control.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="vsl-slide" id="slide-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl font-bold mb-8 reveal text-center">The Truth About Unpredictable Channels</h2>
+                
+                <div class="space-y-6 text-xl text-slate-300 font-light reveal reveal-delay-1">
+                    <p>Some of that is working. You're getting some calls. You're closing deals.</p>
+                    <p class="text-2xl font-semibold text-red-400">But none of those channels are predictable.</p>
+                    <ul class="space-y-4 ml-6 list-disc marker:text-slate-600">
+                        <li>You can't control when a referral comes in.</li>
+                        <li>You can't control when someone sees your post.</li>
+                        <li>You can't control when an ad converts.</li>
+                    </ul>
+                    <p class="p-6 bg-slate-800/50 rounded-xl border border-slate-700 text-white font-medium">
+                        One month you book 15 calls. The next month you book 3. One quarter you hit your goals. The next quarter you're scrambling. It's exhausting.
+                    </p>
+                </div>
+
+                <div class="mt-16 reveal reveal-delay-2 text-center">
+                    <h3 class="text-3xl font-bold mb-6">Your Competitors Are Already Solving This.</h3>
+                    <p class="text-lg text-slate-300">
+                        While you're waiting for referrals, they're booking 20, 30, 50 calls per month with your ideal buyers using a system that <span class="text-white font-bold border-b-2 border-brand-500">costs them nothing unless it works.</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="vsl-slide" id="slide-5">
+            <div class="max-w-4xl mx-auto text-center">
+                <span class="text-brand-400 font-semibold tracking-wider uppercase text-sm mb-4 block reveal">The Solution</span>
+                <h2 class="text-5xl font-bold mb-8 reveal reveal-delay-1">A Performance-Based Cold Email System</h2>
+                <p class="text-2xl text-slate-300 font-light mb-12 reveal reveal-delay-2">That fills your calendar with zero risk.</p>
+
+                <div class="bg-gradient-to-br from-slate-800 to-slate-900 border border-brand-500/30 p-10 rounded-3xl shadow-2xl reveal reveal-delay-3">
+                    <h3 class="text-2xl font-bold text-white mb-6">Here's exactly what I'm offering:</h3>
+                    <p class="text-xl text-slate-300 leading-relaxed mb-8">
+                        I'll build and run your entire cold email infrastructure — from domain setup to booked calls — and <strong class="text-brand-400">you only pay when a qualified buyer books a call with you.</strong>
+                    </p>
+                    
+                    <div class="flex flex-col md:flex-row justify-center gap-6">
+                        <div class="bg-slate-800 p-4 rounded-lg flex items-center justify-center gap-3 border border-slate-700">
+                            <i class="fa-solid fa-ban text-red-400"></i>
+                            <span class="font-medium">No Retainers</span>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg flex items-center justify-center gap-3 border border-slate-700">
+                            <i class="fa-solid fa-check-double text-green-400"></i>
+                            <span class="font-medium">Zero Risk</span>
+                        </div>
+                        <div class="bg-slate-800 p-4 rounded-lg flex items-center justify-center gap-3 border border-slate-700">
+                            <i class="fa-solid fa-calendar-check text-brand-400"></i>
+                            <span class="font-medium">Pay Per Show</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="vsl-slide" id="slide-6">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl font-bold mb-10 text-center reveal">It Doesn't Replace. It Multiplies.</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center reveal reveal-delay-1">
+                    <div>
+                        <p class="text-xl text-slate-300 font-light leading-relaxed mb-6">
+                            Let me say that again: You only pay when a qualified buyer is sitting on your calendar, ready to talk to you.
+                        </p>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-center gap-3 text-slate-400"><i class="fa-solid fa-xmark text-red-500"></i> Not for opens.</li>
+                            <li class="flex items-center gap-3 text-slate-400"><i class="fa-solid fa-xmark text-red-500"></i> Not for replies.</li>
+                            <li class="flex items-center gap-3 text-slate-400"><i class="fa-solid fa-xmark text-red-500"></i> Not for "interested" responses.</li>
+                            <li class="flex items-center gap-3 text-white font-semibold text-lg mt-4"><i class="fa-solid fa-check text-green-500"></i> Only for confirmed calls with your ICP.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-slate-800/40 border border-slate-700 p-8 rounded-2xl">
+                        <h3 class="text-xl font-bold mb-6">Keep doing what works:</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center border-b border-slate-700/50 pb-3">
+                                <span class="text-slate-300">Facebook Ads</span>
+                                <span class="text-brand-400 font-medium">Keep doing that.</span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-slate-700/50 pb-3">
+                                <span class="text-slate-300">LinkedIn Content</span>
+                                <span class="text-brand-400 font-medium">Keep doing that.</span>
+                            </div>
+                            <div class="flex justify-between items-center pb-3">
+                                <span class="text-slate-300">Referrals</span>
+                                <span class="text-brand-400 font-medium">Keep doing that.</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 p-4 bg-brand-900/30 rounded-lg border border-brand-500/20 text-center">
+                            <p class="text-brand-100 text-sm">Add a channel that costs nothing unless it works. If it works, you make money. If it doesn't, you pay nothing.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="vsl-slide" id="slide-7">
+            <div class="max-w-5xl mx-auto w-full">
+                <span class="text-brand-400 font-semibold tracking-wider uppercase text-sm mb-4 block text-center reveal">The Proof</span>
+                <h2 class="text-4xl font-bold mb-4 text-center reveal reveal-delay-1">Why This Works At Scale</h2>
+                <p class="text-center text-slate-400 mb-12 max-w-2xl mx-auto reveal reveal-delay-1">Every major B2B company is running cold email right now. They're just not telling you about it. Here is what is possible when done right.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal reveal-delay-2">
+                    <!-- Baton Case Study -->
+                    <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700 hover:border-brand-500/50 transition-colors">
+                        <a href="https://www.youtube.com/watch?v=mXVxbZHc95k" target="_blank" class="vid-thumb block relative rounded-xl overflow-hidden mb-6">
+                            <img src="https://img.youtube.com/vi/mXVxbZHc95k/maxresdefault.jpg" alt="Phil Kirkeiner Case Study" class="w-full h-48 object-cover">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="play-btn w-14 h-14 rounded-full flex items-center justify-center border border-white/20">
+                                    <i class="fa-solid fa-play text-white text-xl ml-1"></i>
+                                </div>
+                            </div>
+                        </a>
+                        <h3 class="text-2xl font-bold mb-2">Phil Kirkeiner <span class="text-slate-400 text-lg font-normal">| Baton</span></h3>
+                        <p class="text-slate-300">B2B SaaS Founder closed <strong class="text-white">50 meetings in the first month</strong> of hiring cold email services.</p>
+                    </div>
+
+                    <!-- Fithive Case Study -->
+                    <div class="bg-slate-800/50 rounded-2xl p-6 border border-slate-700 hover:border-brand-500/50 transition-colors">
+                        <a href="https://www.youtube.com/watch?v=PWGK9eLd56g" target="_blank" class="vid-thumb block relative rounded-xl overflow-hidden mb-6">
+                            <img src="https://img.youtube.com/vi/PWGK9eLd56g/maxresdefault.jpg" alt="Sunny Stuart Case Study" class="w-full h-48 object-cover">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="play-btn w-14 h-14 rounded-full flex items-center justify-center border border-white/20">
+                                    <i class="fa-solid fa-play text-white text-xl ml-1"></i>
+                                </div>
+                            </div>
+                        </a>
+                        <h3 class="text-2xl font-bold mb-2">Sunny Stuart <span class="text-slate-400 text-lg font-normal">| Fithive</span></h3>
+                        <p class="text-slate-300">Management tool for fitness studios got <strong class="text-white">26 booked demos</strong> with gym owners within the first 3 weeks.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="vsl-slide" id="slide-8">
+            <div class="max-w-5xl mx-auto w-full">
+                <h2 class="text-4xl font-bold mb-12 text-center reveal">The Logic: Why Cold Email Works</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12 reveal reveal-delay-1">
+                    <div class="bg-slate-800/30 p-6 rounded-xl border border-slate-700/50">
+                        <div class="w-12 h-12 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center mb-4 text-xl"><i class="fa-solid fa-earth-americas"></i></div>
+                        <h3 class="text-xl font-bold mb-2">Reach</h3>
+                        <p class="text-slate-400 text-sm">Reach thousands of your exact ideal buyers every week. Decision-makers with budget and authority.</p>
+                    </div>
+                    <div class="bg-slate-800/30 p-6 rounded-xl border border-slate-700/50">
+                        <div class="w-12 h-12 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center mb-4 text-xl"><i class="fa-solid fa-crosshairs"></i></div>
+                        <h3 class="text-xl font-bold mb-2">Targeting</h3>
+                        <p class="text-slate-400 text-sm">Control exactly who you reach. Specific titles, company sizes, industries. No wasted impressions.</p>
+                    </div>
+                    <div class="bg-slate-800/30 p-6 rounded-xl border border-slate-700/50">
+                        <div class="w-12 h-12 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center mb-4 text-xl"><i class="fa-solid fa-coins"></i></div>
+                        <h3 class="text-xl font-bold mb-2">Cost</h3>
+                        <p class="text-slate-400 text-sm">Pennies per conversation. Compare that to $200-$500 per booked call with paid ads.</p>
+                    </div>
+                    <div class="bg-slate-800/30 p-6 rounded-xl border border-slate-700/50 lg:col-start-2">
+                        <div class="w-12 h-12 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center mb-4 text-xl"><i class="fa-solid fa-chart-line"></i></div>
+                        <h3 class="text-xl font-bold mb-2">Scalability</h3>
+                        <p class="text-slate-400 text-sm">Runs 24/7. You're not dependent on algorithms, ad platforms, or social media trends.</p>
+                    </div>
+                    <div class="bg-slate-800/30 p-6 rounded-xl border border-slate-700/50">
+                        <div class="w-12 h-12 rounded-lg bg-brand-500/20 text-brand-400 flex items-center justify-center mb-4 text-xl"><i class="fa-solid fa-crystal-ball"></i></div>
+                        <h3 class="text-xl font-bold mb-2">Predictability</h3>
+                        <p class="text-slate-400 text-sm">Know exactly how many emails go out and calls book. Forecast revenue with precision.</p>
+                    </div>
+                </div>
+
+                <div class="bg-red-900/20 border border-red-500/30 rounded-xl p-6 text-center max-w-3xl mx-auto reveal reveal-delay-2">
+                    <h3 class="text-xl font-semibold text-red-400 mb-3">So why do most people fail?</h3>
+                    <p class="text-slate-300">They send from their main domain, scrape bad data, write generic salesy copy, and quit after two weeks. <span class="text-white font-bold">Cold email works. You just need the right system.</span></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="vsl-slide" id="slide-9">
+            <div class="max-w-4xl mx-auto w-full">
+                <span class="text-green-400 font-semibold tracking-wider uppercase text-sm mb-4 block text-center reveal">The Math</span>
+                <h2 class="text-4xl font-bold mb-4 text-center reveal reveal-delay-1">What You're Leaving On The Table</h2>
+                <p class="text-center text-slate-400 mb-12 max-w-2xl mx-auto reveal reveal-delay-1">Assuming a $15,000 service and a conservative 20% close rate on highly qualified calls.</p>
+
+                <div class="space-y-6 reveal reveal-delay-2">
+                    <!-- Scenario 1 -->
+                    <div class="bg-slate-800/40 border border-slate-700 rounded-xl p-6 flex flex-col md:flex-row justify-between items-center">
+                        <div class="mb-4 md:mb-0 text-center md:text-left">
+                            <h3 class="text-xl font-bold text-slate-200">Scenario 1: 10 Calls/Mo</h3>
+                            <p class="text-slate-400">10 calls &times; 20% close rate = 2 new clients</p>
+                        </div>
+                        <div class="text-3xl font-extrabold text-white">
+                            $30,000 <span class="text-lg font-normal text-slate-400">/mo</span>
+                        </div>
+                    </div>
+
+                    <!-- Scenario 2 -->
+                    <div class="bg-slate-800/60 border border-brand-500/30 rounded-xl p-6 flex flex-col md:flex-row justify-between items-center transform md:scale-105 shadow-xl">
+                        <div class="mb-4 md:mb-0 text-center md:text-left">
+                            <h3 class="text-xl font-bold text-brand-300">Scenario 2: 25 Calls/Mo</h3>
+                            <p class="text-slate-300">25 calls &times; 20% close rate = 5 new clients</p>
+                        </div>
+                        <div class="text-4xl font-extrabold text-brand-400">
+                            $75,000 <span class="text-lg font-normal text-brand-200">/mo</span>
+                        </div>
+                    </div>
+
+                    <!-- Scenario 3 -->
+                    <div class="bg-slate-800/40 border border-slate-700 rounded-xl p-6 flex flex-col md:flex-row justify-between items-center">
+                        <div class="mb-4 md:mb-0 text-center md:text-left">
+                            <h3 class="text-xl font-bold text-slate-200">Scenario 3: 50 Calls/Mo</h3>
+                            <p class="text-slate-400">50 calls &times; 20% close rate = 10 new clients</p>
+                        </div>
+                        <div class="text-3xl font-extrabold text-white">
+                            $150,000 <span class="text-lg font-normal text-slate-400">/mo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="vsl-slide" id="slide-10">
+            <div class="max-w-5xl mx-auto w-full">
+                <h2 class="text-4xl font-bold mb-8 text-center reveal">The Cost of Inaction</h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 reveal reveal-delay-1 items-start">
+                    <div>
+                        <p class="text-xl text-slate-300 mb-6 leading-relaxed">
+                            If you could be booking 25 calls per month and closing 5 new clients at $15K each, that's $75,000 in revenue per month.
+                        </p>
+                        <ul class="space-y-4 mb-8">
+                            <li class="bg-red-900/20 border border-red-500/20 p-4 rounded-lg flex justify-between">
+                                <span class="text-slate-300">Wait 30 days:</span>
+                                <span class="text-red-400 font-bold">Lost $75,000</span>
+                            </li>
+                            <li class="bg-red-900/30 border border-red-500/30 p-4 rounded-lg flex justify-between">
+                                <span class="text-slate-300">Wait 90 days:</span>
+                                <span class="text-red-400 font-bold">Lost $225,000</span>
+                            </li>
+                        </ul>
+                        <p class="text-slate-400 italic">This doesn't account for lifetime value, referrals, case studies, or compounding growth. Every day you wait is revenue you'll never get back.</p>
+                    </div>
+
+                    <!-- ROI Calculator Embed Wrapper -->
+                    <div class="bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden flex flex-col h-[400px] shadow-2xl">
+                        <div class="bg-slate-900 p-4 border-b border-slate-700 flex items-center justify-between">
+                            <h3 class="font-bold flex items-center gap-2"><i class="fa-solid fa-calculator text-brand-400"></i> ROI Calculator</h3>
+                            <a href="roi_calculator.html" target="_blank" class="text-xs bg-slate-700 hover:bg-slate-600 px-3 py-1 rounded transition">Open in new tab <i class="fa-solid fa-external-link-alt ml-1"></i></a>
+                        </div>
+                        <div class="flex-grow w-full relative bg-white">
+                            <!-- Attempting iframe embed as requested. Fallback visually handled if blocked. -->
+                            <iframe src="roi_calculator.html" width="100%" height="100%" frameborder="0" class="absolute inset-0"></iframe>
+                            
+                            <!-- Visual Fallback in case Iframe is blocked by X-Frame-Options -->
+                            <div class="absolute inset-0 bg-slate-800 flex flex-col items-center justify-center p-6 text-center z-[-1]">
+                                <i class="fa-solid fa-chart-pie text-5xl text-slate-600 mb-4"></i>
+                                <h4 class="text-lg font-bold text-slate-300 mb-2">Interactive ROI Calculator</h4>
+                                <p class="text-sm text-slate-400 mb-4">Due to browser security, this app opens in a new window.</p>
+                                <a href="roi_calculator.html" target="_blank" class="bg-brand-500 hover:bg-brand-600 text-white font-semibold py-2 px-6 rounded-lg transition">Calculate Your ROI</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+<section id="founder" class="py-24 relative z-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card rounded-3xl p-8 md:p-12 border border-dark-700 overflow-hidden relative">
+                <div class="glow bottom-0 right-0 bg-brand-500/20"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center relative z-10">
+                    <div class="md:col-span-5 flex justify-center">
+                        <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full p-2 bg-gradient-to-tr from-brand-600 to-dark-800 shadow-2xl">
+                        <img src="founder.jpg" alt="Maxime - Founder of Leadigo" class="w-full h-full object-cover rounded-full border-4 border-dark-900">
+
+                        </div>
+                    </div>
+                    <div class="md:col-span-7 text-center md:text-left">
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-2">Meet The Founder</h2>
+                        <h3 class="text-xl text-brand-500 font-medium mb-6">Maxime</h3>
+                        
+                        <div class="text-gray-300 text-lg leading-relaxed space-y-4">
+                            <p>
+                                "I founded Leadigo with one mission: to eliminate the guesswork in customer acquisition."
+                            </p>
+                            <p>
+                                "After working in software for 2 years at an investment bank, I saw firsthand how critical predictable revenue systems were to massive organizations. I wanted to bring my own creation into the world to solve this exact problem for high-ticket B2B companies—and this is it!"
+                            </p>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <a href="#booking" class="inline-flex items-center gap-2 text-white font-medium hover:text-brand-400 transition-colors">
+                                Let's build your machine 
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        <section class="vsl-slide" id="slide-11">
+            <div class="max-w-4xl mx-auto w-full">
+                <span class="text-brand-400 font-semibold tracking-wider uppercase text-sm mb-4 block text-center reveal">How It Works</span>
+                <h2 class="text-4xl font-bold mb-12 text-center reveal reveal-delay-1">The 4-Step System That Books Calls on Autopilot</h2>
+                
+                <div class="relative reveal reveal-delay-2">
+                    <!-- Vertical Line -->
+                    <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-slate-700 -translate-x-1/2"></div>
+                    
+                    <div class="space-y-12">
+                        <!-- Step 1 -->
+                        <div class="relative flex flex-col md:flex-row items-center md:justify-between w-full">
+                            <div class="md:w-5/12 text-center md:text-right mb-6 md:mb-0">
+                                <h3 class="text-2xl font-bold text-white mb-2">Step 1: Domain & Inbox Setup</h3>
+                                <p class="text-slate-400">Dedicated sending domains separate from your main. We warm them up over 2-3 weeks to build trust and ensure maximum deliverability.</p>
+                            </div>
+                            <div class="absolute left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-slate-900 border-4 border-brand-500 flex items-center justify-center font-bold text-brand-400 z-10 hidden md:flex">1</div>
+                            <div class="md:w-5/12 flex justify-center md:justify-start">
+                                <div class="w-full max-w-[200px] h-32 bg-slate-800 rounded-xl border border-slate-700 flex items-center justify-center">
+                                    <i class="fa-solid fa-server text-4xl text-brand-400/50"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div class="relative flex flex-col md:flex-row-reverse items-center md:justify-between w-full">
+                            <div class="md:w-5/12 text-center md:text-left mb-6 md:mb-0">
+                                <h3 class="text-2xl font-bold text-white mb-2">Step 2: Precision Data Mining</h3>
+                                <p class="text-slate-400">We target decision-makers based on specific job titles, company sizes, and industries. Every contact is verified for accuracy. No bounces.</p>
+                            </div>
+                            <div class="absolute left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-slate-900 border-4 border-brand-500 flex items-center justify-center font-bold text-brand-400 z-10 hidden md:flex">2</div>
+                            <div class="md:w-5/12 flex justify-center md:justify-end">
+                                <div class="w-full max-w-[200px] h-32 bg-slate-800 rounded-xl border border-slate-700 flex items-center justify-center">
+                                    <i class="fa-solid fa-database text-4xl text-brand-400/50"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="vsl-slide" id="slide-12">
+            <div class="max-w-4xl mx-auto w-full">
+                <div class="relative reveal">
+                    <!-- Vertical Line (continued) -->
+                    <div class="hidden md:block absolute left-1/2 top-0 bottom-0 w-0.5 bg-slate-700 -translate-x-1/2"></div>
+                    
+                    <div class="space-y-12">
+                        <!-- Step 3 -->
+                        <div class="relative flex flex-col md:flex-row items-center md:justify-between w-full">
+                            <div class="md:w-5/12 text-center md:text-right mb-6 md:mb-0">
+                                <h3 class="text-2xl font-bold text-white mb-2">Step 3: High-Converting Copy</h3>
+                                <p class="text-slate-400">Short, direct, conversational emails personalized to pain points. We continuously A/B test and optimize based on booked call rates.</p>
+                            </div>
+                            <div class="absolute left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-slate-900 border-4 border-brand-500 flex items-center justify-center font-bold text-brand-400 z-10 hidden md:flex">3</div>
+                            <div class="md:w-5/12 flex justify-center md:justify-start">
+                                <div class="w-full max-w-[200px] h-32 bg-slate-800 rounded-xl border border-slate-700 flex items-center justify-center">
+                                    <i class="fa-solid fa-envelope-open-text text-4xl text-brand-400/50"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 4 -->
+                        <div class="relative flex flex-col md:flex-row-reverse items-center md:justify-between w-full">
+                            <div class="md:w-5/12 text-center md:text-left mb-6 md:mb-0">
+                                <h3 class="text-2xl font-bold text-brand-400 mb-2">Step 4: Qualified Calls Booked</h3>
+                                <p class="text-slate-300 font-medium">Interested prospects book directly onto your calendar. We vet every lead to ensure they fit your ICP, have budget, and authority.</p>
+                            </div>
+                            <div class="absolute left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-brand-500 border-4 border-brand-900 flex items-center justify-center font-bold text-white z-10 hidden md:flex">4</div>
+                            <div class="md:w-5/12 flex justify-center md:justify-end">
+                                <div class="w-full max-w-[200px] h-32 bg-brand-900/30 rounded-xl border border-brand-500 flex items-center justify-center shadow-[0_0_30px_rgba(37,99,235,0.2)]">
+                                    <i class="fa-solid fa-phone-volume text-5xl text-brand-400"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="vsl-slide" id="slide-13">
+            <div class="max-w-5xl mx-auto w-full">
+                <span class="text-brand-400 font-semibold tracking-wider uppercase text-sm mb-4 block text-center reveal">What You Get</span>
+                <h2 class="text-4xl font-bold mb-4 text-center reveal reveal-delay-1">The Full Build-Out</h2>
+                <p class="text-center text-slate-400 mb-12 max-w-2xl mx-auto reveal reveal-delay-1">This is a full done-for-you infrastructure build. The entire car. Not just the tires.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 reveal reveal-delay-2">
+                    <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700">
+                        <h3 class="text-lg font-bold mb-4 text-white border-b border-slate-700 pb-2">Infrastructure Setup</h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Dedicated domain registration & DNS</li>
+                            <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Inbox setup & auth (SPF, DKIM, DMARC)</li>
+                            <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Automated 2-3 week inbox warming</li>
+                            <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Seamless CRM integration</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700">
+                        <h3 class="text-lg font-bold mb-4 text-white border-b border-slate-700 pb-2">Data & Targeting</h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> ICP definition & buyer mapping</li>
+                            <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Building verified lists of thousands</li>
+                            <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Ongoing list refresh & hygiene</li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700">
+                        <h3 class="text-lg font-bold mb-4 text-white border-b border-slate-700 pb-2">Copywriting & Management</h3>
+                        <ul class="space-y-2 text-slate-300 text-sm">
+                            <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Multi-touchpoint sequence creation</li>
+                            <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Continuous A/B testing & iteration</li>
+                            <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Daily sending & deliverability mgmt</li>
+                            <li><i class="fa-solid fa-check text-brand-500 mr-2"></i> Lead qualification & calendar routing</li>
+                        </ul>
+                    </div>
+                    <div class="bg-brand-900/20 p-6 rounded-xl border border-brand-500/50 relative overflow-hidden">
+                        <div class="absolute -right-6 -top-6 text-brand-500/10"><i class="fa-solid fa-handshake text-9xl"></i></div>
+                        <h3 class="text-lg font-bold mb-4 text-brand-300 border-b border-brand-500/30 pb-2 relative z-10">The Guarantee</h3>
+                        <ul class="space-y-3 text-white font-medium relative z-10">
+                            <li><i class="fa-solid fa-star text-yellow-400 mr-2"></i> You only pay when a qualified buyer books a call.</li>
+                            <li><i class="fa-solid fa-star text-yellow-400 mr-2"></i> No retainers. No risk.</li>
+                            <li><i class="fa-solid fa-star text-yellow-400 mr-2"></i> We handle everything. You just close deals.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="vsl-slide" id="slide-14">
+            <div class="max-w-4xl mx-auto w-full">
+                <h2 class="text-4xl font-bold mb-10 text-center reveal">Your Questions, Answered</h2>
+                
+                <div class="space-y-4 reveal reveal-delay-1">
+                    <!-- FAQ Item 1 -->
+                    <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700">
+                        <h4 class="text-lg font-bold mb-2 text-brand-300">"How much does this cost?"</h4>
+                        <p class="text-slate-300">You only pay per qualified call booked. The exact price depends on your industry and deal size, but it's structured so every payment means you've already made money.</p>
+                    </div>
+                    <!-- FAQ Item 2 -->
+                    <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700">
+                        <h4 class="text-lg font-bold mb-2 text-brand-300">"How long to see results?"</h4>
+                        <p class="text-slate-300">Setup takes 2-3 weeks (domain warming, list building, copy). After that, you'll start seeing booked calls within the first 30 days. Consistent flow by month 2.</p>
+                    </div>
+                    <!-- FAQ Item 3 -->
+                    <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700">
+                        <h4 class="text-lg font-bold mb-2 text-brand-300">"What if the leads aren't qualified?"</h4>
+                        <p class="text-slate-300">We vet every lead before they book. If someone books who doesn't fit your ICP, <strong class="text-white">we don't charge you.</strong> Simple as that.</p>
+                    </div>
+                    <!-- FAQ Item 4 -->
+                    <div class="bg-slate-800/60 p-6 rounded-xl border border-slate-700">
+                        <h4 class="text-lg font-bold mb-2 text-brand-300">"Can I cancel anytime?"</h4>
+                        <p class="text-slate-300">Yes. No long-term contracts. If you want to stop, you stop. No penalties. Our incentives are 100% aligned with yours.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="vsl-slide" id="slide-15">
+            <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                <div class="reveal">
+                    <span class="text-brand-400 font-semibold tracking-wider uppercase text-sm mb-4 block">Next Steps</span>
+                    <h2 class="text-5xl font-bold mb-6">Book Your Free Strategy Call</h2>
+                    <p class="text-xl text-slate-300 mb-8 font-light">
+                        Book a 15-minute call with me. Not a salesperson. Me. Zero obligation. Zero pressure.
+                    </p>
+
+                    <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700 mb-8">
+                        <h3 class="font-bold text-lg mb-4 text-white">On that call, we'll:</h3>
+                        <ul class="space-y-3 text-slate-300">
+                            <li><i class="fa-solid fa-arrow-right text-brand-500 mr-2"></i> <strong>Audit your pipeline:</strong> what's working, what's not.</li>
+                            <li><i class="fa-solid fa-arrow-right text-brand-500 mr-2"></i> <strong>Map your ICP:</strong> industries, sizes, pain points.</li>
+                            <li><i class="fa-solid fa-arrow-right text-brand-500 mr-2"></i> <strong>Project realistic numbers:</strong> based on market size.</li>
+                            <li><i class="fa-solid fa-arrow-right text-brand-500 mr-2"></i> <strong>Walk through pricing:</strong> spoiler: only when calls book.</li>
+                        </ul>
+                    </div>
+
+                    <p class="text-lg text-slate-400 italic">
+                        "Every week you delay is $10K, $25K, $50K in pipeline you'll never get back. The only risk is staying where you are."
+                    </p>
+                </div>
+
+                <!-- Calendly Embed -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-2xl reveal reveal-delay-2 h-[700px]">
+                    <div class="calendly-inline-widget" data-url="https://calendly.com/maxime-leadigo/15min" style="min-width:320px;height:100%;"></div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup Intersection Observer for reveal animations
+            const revealElements = document.querySelectorAll('.reveal');
+            
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                root: null,
+                threshold: 0.15,
+                rootMargin: "-50px"
+            });
+
+            revealElements.forEach(el => {
+                revealObserver.observe(el);
+            });
+
+            // Update Progress Bar
+            const progressBar = document.getElementById('progress-bar');
+            
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                progressBar.style.width = scrolled + '%';
+            });
+            
+            // Trigger initial scroll calculation to set progress bar to 0 immediately
+            window.dispatchEvent(new Event('scroll'));
+        });
+    </script>
+</body>
+</html>
