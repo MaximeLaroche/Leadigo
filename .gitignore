@@ -1,2 +1,4 @@
 venv/
-
+.kimi-code/
+.github/
+venv-win/
