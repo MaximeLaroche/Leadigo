@@ -10,13 +10,14 @@
     const localized = (baseName, targetLang) => targetLang === 'en' ? baseName : baseName.replace('.html', `-${targetLang}.html`);
     const pageBases = ['index.html', 'roi_calculator.html', 'strategy_call.html'];
 
-    // Keep page-to-page navigation in the selected language.
-    document.querySelectorAll('a[href]').forEach((a) => {
-        const href = a.getAttribute('href');
-        if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto:')) return;
-        const hrefBase = href.replace('-fr.html', '.html').replace('-es.html', '.html');
-        if (!pageBases.includes(hrefBase)) return;
-        a.setAttribute('href', localized(hrefBase, lang));
+    // Keep page-to-page navigation and embedded apps in the selected language.
+    document.querySelectorAll('a[href], iframe[src]').forEach((el) => {
+        const attr = el.tagName === 'IFRAME' ? 'src' : 'href';
+        const value = el.getAttribute(attr);
+        if (!value || value.startsWith('#') || value.startsWith('http') || value.startsWith('mailto:')) return;
+        const valueBase = value.replace('-fr.html', '.html').replace('-es.html', '.html');
+        if (!pageBases.includes(valueBase)) return;
+        el.setAttribute(attr, localized(valueBase, lang));
     });
 
     const style = document.createElement('style');
