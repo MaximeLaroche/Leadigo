@@ -432,8 +432,8 @@
             <div class="max-w-5xl mx-auto w-full">
                 <h2 class="text-4xl font-bold mb-8 text-center reveal">The Cost of Inaction</h2>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 reveal reveal-delay-1 items-start">
-                    <div>
+                <div class="reveal reveal-delay-1 space-y-10">
+                    <div class="max-w-3xl mx-auto text-center md:text-left">
                         <p class="text-xl text-slate-300 mb-6 leading-relaxed">
                             If you could be booking 25 calls per month and closing 5 new clients at $15K each, that's $75,000 in revenue per month.
                         </p>
@@ -451,14 +451,20 @@
                     </div>
 
                     <!-- ROI Calculator Embed Wrapper -->
-                    <div class="bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden flex flex-col h-[400px] shadow-2xl">
+                    <div class="bg-slate-800 rounded-2xl border border-slate-700 overflow-hidden shadow-2xl">
                         <div class="bg-slate-900 p-4 border-b border-slate-700 flex items-center justify-between">
                             <h3 class="font-bold flex items-center gap-2"><i class="fa-solid fa-calculator text-brand-400"></i> ROI Calculator</h3>
                             <a href="roi_calculator.html" target="_blank" class="text-xs bg-slate-700 hover:bg-slate-600 px-3 py-1 rounded transition">Open in new tab <i class="fa-solid fa-external-link-alt ml-1"></i></a>
                         </div>
-                        <div class="flex-grow w-full relative bg-white">
-                            <!-- Attempting iframe embed as requested. Fallback visually handled if blocked. -->
-                            <iframe src="roi_calculator.html" width="100%" height="100%" frameborder="0" class="absolute inset-0"></iframe>
+                        <div class="w-full relative bg-slate-900">
+                            <iframe
+                                id="roi-embed"
+                                src="roi_calculator.html"
+                                title="ROI Calculator"
+                                scrolling="no"
+                                class="w-full border-0 block"
+                                style="height: 560px; overflow: hidden;"
+                            ></iframe>
                             
                             <!-- Visual Fallback in case Iframe is blocked by X-Frame-Options -->
                             <div class="absolute inset-0 bg-slate-800 flex flex-col items-center justify-center p-6 text-center z-[-1]">
@@ -629,27 +635,12 @@
         </section>
 
         <section class="vsl-slide" id="slide-15">
-            <div class="max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                
-                <div class="reveal">
+            <div class="max-w-6xl mx-auto w-full">
+                <div class="text-center mb-10 reveal">
                     <span class="text-brand-400 font-semibold tracking-wider uppercase text-sm mb-4 block">Next Steps</span>
-                    <h2 class="text-5xl font-bold mb-6">Book Your Free Strategy Call</h2>
-                    <p class="text-xl text-slate-300 mb-8 font-light">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Book Your Free Strategy Call</h2>
+                    <p class="text-xl text-slate-300 font-light max-w-2xl mx-auto">
                         Book a 15-minute call with me. Not a salesperson. Me. Zero obligation. Zero pressure.
-                    </p>
-
-                    <div class="bg-slate-800/40 p-6 rounded-xl border border-slate-700 mb-8">
-                        <h3 class="font-bold text-lg mb-4 text-white">On that call, we'll:</h3>
-                        <ul class="space-y-3 text-slate-300">
-                            <li><i class="fa-solid fa-arrow-right text-brand-500 mr-2"></i> <strong>Audit your pipeline:</strong> what's working, what's not.</li>
-                            <li><i class="fa-solid fa-arrow-right text-brand-500 mr-2"></i> <strong>Map your ICP:</strong> industries, sizes, pain points.</li>
-                            <li><i class="fa-solid fa-arrow-right text-brand-500 mr-2"></i> <strong>Project realistic numbers:</strong> based on market size.</li>
-                            <li><i class="fa-solid fa-arrow-right text-brand-500 mr-2"></i> <strong>Walk through pricing:</strong> spoiler: only when calls book.</li>
-                        </ul>
-                    </div>
-
-                    <p class="text-lg text-slate-400 italic">
-                        "Every week you delay is $10K, $25K, $50K in pipeline you'll never get back. The only risk is staying where you are."
                     </p>
                 </div>
 
@@ -657,7 +648,6 @@
                 <div class="bg-white rounded-2xl overflow-hidden shadow-2xl reveal reveal-delay-2 h-[700px]">
                     <div class="calendly-inline-widget" data-url="https://calendly.com/maxime-leadigo/15min" style="min-width:320px;height:100%;"></div>
                 </div>
-
             </div>
         </section>
 
@@ -775,6 +765,28 @@
             
             // Trigger initial scroll calculation to set progress bar to 0 immediately
             window.dispatchEvent(new Event('scroll'));
+
+            // Auto-size the ROI calculator iframe to its content (no inner scrollbar)
+            const roiFrame = document.getElementById('roi-embed');
+            const resizeRoiFrame = (height) => {
+                if (!roiFrame || !height) return;
+                roiFrame.style.height = Math.ceil(height) + 'px';
+            };
+            window.addEventListener('message', (event) => {
+                if (event.data && event.data.type === 'roi-embed-height') {
+                    resizeRoiFrame(event.data.height);
+                }
+            });
+            if (roiFrame) {
+                roiFrame.addEventListener('load', () => {
+                    try {
+                        const doc = roiFrame.contentDocument || roiFrame.contentWindow.document;
+                        resizeRoiFrame(doc.documentElement.scrollHeight || doc.body.scrollHeight);
+                    } catch (e) {
+                        // cross-origin fallback relies on postMessage
+                    }
+                });
+            }
         });
     </script>
 </body>
