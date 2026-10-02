@@ -3,37 +3,34 @@
     let file = path.substring(path.lastIndexOf('/') + 1) || 'index.html';
     if (!file.endsWith('.html')) file = 'index.html';
 
-    const isFr = /-fr\.html$/.test(file) || document.documentElement.lang === 'fr';
-    localStorage.setItem('leadigo-lang', isFr ? 'fr' : 'en');
+    const lang = file.includes('-fr.html') ? 'fr' : (file.includes('-es.html') ? 'es' : 'en');
+    localStorage.setItem('leadigo-lang', lang);
 
-    const enFile = isFr ? file.replace(/-fr\.html$/, '.html') : file;
-    const frFile = isFr ? file : file.replace(/\.html$/, '-fr.html');
+    const base = file.replace('-fr.html', '.html').replace('-es.html', '.html');
+    const localized = (baseName, targetLang) => targetLang === 'en' ? baseName : baseName.replace('.html', `-${targetLang}.html`);
+    const pageBases = ['index.html', 'roi_calculator.html', 'strategy_call.html'];
 
     // Keep page-to-page navigation in the selected language.
-    const pageNames = ['index.html', 'roi_calculator.html', 'strategy_call.html', 'index-fr.html', 'roi_calculator-fr.html', 'strategy_call-fr.html'];
     document.querySelectorAll('a[href]').forEach((a) => {
         const href = a.getAttribute('href');
         if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto:')) return;
-        if (!pageNames.includes(href)) return;
-        if (isFr && !href.includes('-fr.html')) {
-            a.setAttribute('href', href.replace('.html', '-fr.html'));
-        } else if (!isFr && href.includes('-fr.html')) {
-            a.setAttribute('href', href.replace('-fr.html', '.html'));
-        }
+        const hrefBase = href.replace('-fr.html', '.html').replace('-es.html', '.html');
+        if (!pageBases.includes(hrefBase)) return;
+        a.setAttribute('href', localized(hrefBase, lang));
     });
 
     const style = document.createElement('style');
     style.textContent = `
         .lang-flags { display: flex; align-items: center; gap: 0.25rem; }
         .lang-flag {
-            width: 2rem;
-            height: 2rem;
+            width: 1.9rem;
+            height: 1.9rem;
             border-radius: 999px;
             border: 1px solid rgba(148, 163, 184, 0.35);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             line-height: 1;
             text-decoration: none;
             opacity: 0.55;
@@ -49,25 +46,26 @@
         html.light .lang-flag[aria-current="page"] { background-color: rgba(219, 234, 254, 0.7); }
         @media (max-width: 480px) {
             .lang-flags { gap: 0.1rem; }
-            .lang-flag { width: 1.75rem; height: 1.75rem; font-size: 0.85rem; }
+            .lang-flag { width: 1.6rem; height: 1.6rem; font-size: 0.8rem; }
         }
     `;
     document.head.appendChild(style);
 
-    const makeFlag = (href, label, flag, active) => {
+    const makeFlag = (code, label, flag) => {
         const a = document.createElement('a');
-        a.href = href;
+        a.href = localized(base, code);
         a.textContent = flag;
         a.className = 'lang-flag';
         a.setAttribute('aria-label', label);
-        if (active) a.setAttribute('aria-current', 'page');
+        if (code === lang) a.setAttribute('aria-current', 'page');
         return a;
     };
 
     const flags = document.createElement('div');
     flags.className = 'lang-flags';
-    flags.appendChild(makeFlag(enFile, 'English version', '🇬🇧', !isFr));
-    flags.appendChild(makeFlag(frFile, 'Version française', '🇫🇷', isFr));
+    flags.appendChild(makeFlag('en', 'English version', '🇬🇧'));
+    flags.appendChild(makeFlag('fr', 'Version française', '🇫🇷'));
+    flags.appendChild(makeFlag('es', 'Versión en español', '🇪🇸'));
 
     const fab = document.querySelector('.theme-fab');
     if (fab) {
