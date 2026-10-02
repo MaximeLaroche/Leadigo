@@ -6,6 +6,7 @@
     <title>ROI Calculator | Leadigo</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: 'Inter', sans-serif; }
         input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; }
@@ -13,7 +14,7 @@
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 6px; background: #e2e8f0; border-radius: 999px; }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
+<body class="bg-slate-50 min-h-screen flex flex-col items-center justify-center p-4 gap-10">
 
     <div class="bg-white rounded-2xl shadow-xl w-full max-w-5xl flex flex-col md:flex-row overflow-hidden border border-slate-200">
         
@@ -98,6 +99,51 @@
         </div>
     </div>
 
+    <section class="w-full max-w-5xl text-center" id="socials">
+        <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Connect</p>
+        <h2 class="text-2xl font-bold text-slate-900 mb-2">Let's Stay In Touch</h2>
+        <p class="text-slate-500 mb-8 text-sm">Follow along, see the work, or reach out directly.</p>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <a href="https://www.instagram.com/leadigo.io/" target="_blank" rel="noopener noreferrer"
+               class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 hover:shadow-md transition-all group flex flex-col items-center gap-3">
+                <div class="w-10 h-10 rounded-lg flex items-center justify-center text-xl text-white shadow group-hover:scale-110 transition-transform" style="background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);">
+                    <i class="fa-brands fa-instagram"></i>
+                </div>
+                <span class="font-medium text-slate-700 text-sm">@leadigo.io</span>
+            </a>
+            <a href="https://www.youtube.com/@MaximeLaroche-Leadigo" target="_blank" rel="noopener noreferrer"
+               class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 hover:shadow-md transition-all group flex flex-col items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-[#FF0000] text-white flex items-center justify-center text-xl shadow group-hover:scale-110 transition-transform">
+                    <i class="fa-brands fa-youtube"></i>
+                </div>
+                <span class="font-medium text-slate-700 text-xs">@MaximeLaroche-Leadigo</span>
+            </a>
+            <a href="https://x.com/leadigoio" target="_blank" rel="noopener noreferrer"
+               class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 hover:shadow-md transition-all group flex flex-col items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-black flex items-center justify-center shadow group-hover:scale-110 transition-transform">
+                    <svg viewBox="0 0 24 24" class="w-5 h-5" fill="#ffffff" aria-hidden="true">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.227-8.451L1.5 2.25h6.828l4.26 5.688 5.656-5.688zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                </div>
+                <span class="font-medium text-slate-700 text-sm">@leadigoio</span>
+            </a>
+            <a href="mailto:maxime@leadigo.io"
+               class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:border-slate-300 hover:shadow-md transition-all group flex flex-col items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-white border border-slate-100 flex items-center justify-center shadow group-hover:scale-110 transition-transform">
+                    <svg viewBox="0 0 48 48" class="w-6 h-6" aria-hidden="true">
+                        <path fill="#4CAF50" d="M45,16.2l-5,2.75l-5,4.75L35,40h7c1.657,0,3-1.343,3-3V16.2z"/>
+                        <path fill="#1E88E5" d="M3,16.2l3.614,1.71L13,23.7V40H6c-1.657,0-3-1.343-3-3V16.2z"/>
+                        <polygon fill="#E53935" points="35,11.2 24,19.45 13,11.2 12,17 13,23.7 24,31.95 35,23.7 36,17"/>
+                        <path fill="#C62828" d="M3,12.298V16.2l10,7.5V11.2L9.876,8.859C9.132,8.301,8.121,8.335,7.411,8.942L3,12.298z"/>
+                        <path fill="#FBC02D" d="M45,12.298l-4.411-3.356c-0.71-0.607-1.721-0.641-2.465-0.083L35,11.2v12.5l10-7.5V12.298z"/>
+                    </svg>
+                </div>
+                <span class="font-medium text-slate-700 text-sm">Email</span>
+            </a>
+        </div>
+    </section>
+
     <script>
         const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
@@ -145,6 +191,13 @@
         }
 
         document.addEventListener('DOMContentLoaded', calculate);
+
+        // Hide socials when embedded as an iframe on the main site
+        if (window.self !== window.top) {
+            const socials = document.getElementById('socials');
+            if (socials) socials.style.display = 'none';
+            document.body.classList.remove('gap-10');
+        }
     </script>
 </body>
 </html>
