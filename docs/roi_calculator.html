@@ -487,6 +487,12 @@
                 applyTheme(event.newValue || 'system', false);
             }
         });
+        // Direct sync from the parent page when embedded as an iframe
+        window.addEventListener('message', (event) => {
+            if (event.data && event.data.type === 'leadigo-theme') {
+                applyTheme(event.data.theme || 'system', false);
+            }
+        });
 
         const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 });
 
