@@ -23,6 +23,7 @@
     const dictCache = { en: Promise.resolve({}) };
     const nodeOriginals = new WeakMap();
     const attrOriginals = new WeakMap();
+    const scrubOriginals = new WeakMap();
     const originalTitle = document.title;
 
     const valid = (lang) => SUPPORTED.includes(lang) ? lang : 'en';
@@ -80,6 +81,7 @@
                 const parent = node.parentElement;
                 if (!parent) return NodeFilter.FILTER_REJECT;
                 if (SKIP_TAGS.includes(parent.tagName) || parent.id === 'theme-tip') return NodeFilter.FILTER_REJECT;
+                if (parent.closest('.scrub-words')) return NodeFilter.FILTER_REJECT; // handled whole-element by translateScrub
                 if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
                 return NodeFilter.FILTER_ACCEPT;
             }
@@ -91,6 +93,25 @@
             translateNode(node);
         });
         translateAttrs(root);
+    };
+    // .scrub-words elements are split into per-word spans by the GSAP animation,
+    // so their text nodes never match a full-sentence dictionary key. Translate
+    // them at the element level, then re-split via the hook exposed by the page.
+    const translateScrub = (root) => {
+        if (!root.querySelectorAll) return;
+        const els = [];
+        if (root.matches && root.matches('.scrub-words')) els.push(root);
+        root.querySelectorAll('.scrub-words').forEach((el) => els.push(el));
+        els.forEach((el) => {
+            if (!scrubOriginals.has(el)) scrubOriginals.set(el, el.textContent);
+            const orig = scrubOriginals.get(el);
+            const key = orig.trim();
+            const next = (current !== 'en' && key && dict[key]) ? swap(orig, dict[key]) : orig;
+            if (el.textContent !== next) {
+                el.textContent = next;
+                if (typeof window.leadigoSplitScrubWords === 'function') window.leadigoSplitScrubWords(el);
+            }
+        });
     };
     const themeLabels = () => Object.assign({}, DEFAULT_THEME, dict.__theme || {});
     const refreshThemeChrome = () => {
@@ -127,6 +148,7 @@
                             translateNode(node);
                         } else if (node.nodeType === Node.ELEMENT_NODE) {
                             walk(node);
+                            translateScrub(node);
                         }
                     });
                 }
@@ -143,6 +165,7 @@
         applying = true;
         if (observer) observer.disconnect();
         walk(document);
+        translateScrub(document);
         document.documentElement.lang = current;
         const titleKey = originalTitle.trim();
         document.title = (current !== 'en' && dict[titleKey]) ? dict[titleKey] : originalTitle;

@@ -702,7 +702,7 @@
                                 <p class="text-slate-400 leading-relaxed">Dedicated sending domains separate from your main. We warm them up over 2-3 weeks to build trust and ensure maximum deliverability.</p>
                             </div>
                             <div class="absolute left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-slate-900 border-4 border-brand-500 items-center justify-center font-bold text-brand-400 z-10 hidden md:flex">1</div>
-                            <div class="md:w-5/12 flex justify-center md:justify-start">
+                            <div class="w-full md:w-5/12 flex justify-center md:justify-start">
                                 <div class="w-full max-w-[200px] h-32 bg-slate-800 rounded-xl border border-slate-700 flex items-center justify-center card-hover">
                                     <i class="fa-solid fa-server text-4xl text-brand-400/50"></i>
                                 </div>
@@ -716,7 +716,7 @@
                                 <p class="text-slate-400 leading-relaxed">We target decision-makers based on specific job titles, company sizes, and industries. Every contact is verified before sending, keeping bounce rates near zero.</p>
                             </div>
                             <div class="absolute left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-slate-900 border-4 border-brand-500 items-center justify-center font-bold text-brand-400 z-10 hidden md:flex">2</div>
-                            <div class="md:w-5/12 flex justify-center md:justify-end">
+                            <div class="w-full md:w-5/12 flex justify-center md:justify-end">
                                 <div class="w-full max-w-[200px] h-32 bg-slate-800 rounded-xl border border-slate-700 flex items-center justify-center card-hover">
                                     <i class="fa-solid fa-database text-4xl text-brand-400/50"></i>
                                 </div>
@@ -741,7 +741,7 @@
                                 <p class="text-slate-400 leading-relaxed">Short, direct, conversational emails personalized to pain points. We continuously A/B test and optimize based on booked call rates.</p>
                             </div>
                             <div class="absolute left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-slate-900 border-4 border-brand-500 items-center justify-center font-bold text-brand-400 z-10 hidden md:flex">3</div>
-                            <div class="md:w-5/12 flex justify-center md:justify-start">
+                            <div class="w-full md:w-5/12 flex justify-center md:justify-start">
                                 <div class="w-full max-w-[200px] h-32 bg-slate-800 rounded-xl border border-slate-700 flex items-center justify-center card-hover">
                                     <i class="fa-solid fa-envelope-open-text text-4xl text-brand-400/50"></i>
                                 </div>
@@ -755,7 +755,7 @@
                                 <p class="text-slate-300 font-medium leading-relaxed">Interested prospects book directly onto your calendar.</p>
                             </div>
                             <div class="absolute left-1/2 -translate-x-1/2 w-12 h-12 rounded-full bg-brand-500 border-4 border-brand-900 items-center justify-center font-bold text-white z-10 hidden md:flex">4</div>
-                            <div class="md:w-5/12 flex justify-center md:justify-end">
+                            <div class="w-full md:w-5/12 flex justify-center md:justify-end">
                                 <div class="w-full max-w-[200px] h-32 bg-brand-900/30 rounded-xl border border-brand-500 flex items-center justify-center shadow-[0_0_40px_rgba(37,99,235,0.3)]">
                                     <i class="fa-solid fa-phone-volume text-5xl text-brand-400"></i>
                                 </div>
@@ -1033,10 +1033,16 @@
                 });
 
                 // Paradigm 2: Scrubbing word-by-word text reveal
-                document.querySelectorAll('.scrub-words').forEach((el) => {
+                // Exposed globally so language.js can re-split words after translating the sentence
+                window.leadigoSplitScrubWords = (el) => {
+                    if (el._scrubTween) {
+                        if (el._scrubTween.scrollTrigger) el._scrubTween.scrollTrigger.kill();
+                        el._scrubTween.kill();
+                        el._scrubTween = null;
+                    }
                     const words = el.textContent.trim().split(/\s+/);
                     el.innerHTML = words.map((w) => `<span class="w">${w}</span>`).join(' ');
-                    gsap.to(el.querySelectorAll('.w'), {
+                    el._scrubTween = gsap.to(el.querySelectorAll('.w'), {
                         opacity: 1,
                         ease: 'none',
                         stagger: 0.06,
@@ -1047,7 +1053,9 @@
                             scrub: true
                         }
                     });
-                });
+                    ScrollTrigger.refresh();
+                };
+                document.querySelectorAll('.scrub-words').forEach((el) => window.leadigoSplitScrubWords(el));
             } else {
                 // Fallback: simple IntersectionObserver if GSAP fails to load
                 const revealObserver = new IntersectionObserver((entries) => {
