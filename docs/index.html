@@ -194,6 +194,16 @@
             color: #fff;
         }
 
+        /* Calendly enforces a 320px min-width — bleed its card edge-to-edge
+           on narrow phones so the widget is never clipped by overflow-hidden */
+        @media (max-width: 480px) {
+            #book-your-free-strategy-call .calendly-shell {
+                margin-left: -1rem;
+                margin-right: -1rem;
+                border-radius: 0;
+            }
+        }
+
         /* ================= LIGHT THEME ================= */
         html.light body {
             background-color: #f5f7fb;
@@ -450,7 +460,7 @@
         <section class="vsl-slide" id="the-solution">
             <div class="max-w-4xl mx-auto text-center">
                 <span class="kicker text-brand-400 mb-6 reveal">The Solution</span>
-                <h2 class="text-5xl md:text-6xl font-black mb-6 reveal tracking-tight">A Performance-Based Cold Email System</h2>
+                <h2 class="text-4xl md:text-6xl font-black mb-6 reveal tracking-tight">A Performance-Based Cold Email System</h2>
                 <p class="text-2xl text-slate-300 font-light mb-14 reveal">That fills your calendar with zero risk.</p>
 
                 <div class="offer-card bg-gradient-to-br from-slate-800 to-slate-900 border border-brand-500/30 p-10 md:p-14 rounded-3xl shadow-2xl reveal">
@@ -856,7 +866,7 @@
                 </div>
 
                 <!-- Calendly Embed (tall enough that no inner scrolling is needed) -->
-                <div class="bg-white rounded-2xl overflow-hidden shadow-2xl reveal h-[1050px]">
+                <div class="calendly-shell bg-white rounded-2xl overflow-hidden shadow-2xl reveal h-[1050px]">
                     <div class="calendly-inline-widget" data-url="https://calendly.com/maxime-leadigo/15min" style="min-width:320px;height:100%;"></div>
                 </div>
             </div>

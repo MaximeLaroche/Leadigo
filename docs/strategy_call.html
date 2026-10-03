@@ -140,6 +140,16 @@
         }
         .rise-delay { animation-delay: 0.15s; }
 
+        /* Calendly enforces a 320px min-width — bleed its card edge-to-edge
+           on narrow phones so the widget is never clipped by overflow-hidden */
+        @media (max-width: 480px) {
+            main .calendly-shell {
+                margin-left: -1rem;
+                margin-right: -1rem;
+                border-radius: 0;
+            }
+        }
+
         ::selection {
             background: #3b82f6;
             color: #fff;
@@ -228,7 +238,7 @@
         </div>
 
         <!-- Calendly Embed (tall enough that no inner scrolling is needed) -->
-        <div class="bg-white rounded-2xl overflow-hidden shadow-2xl border border-slate-700 h-[1050px] rise rise-delay">
+        <div class="calendly-shell bg-white rounded-2xl overflow-hidden shadow-2xl border border-slate-700 h-[1050px] rise rise-delay">
             <div class="calendly-inline-widget" data-url="https://calendly.com/maxime-leadigo/15min" style="min-width:320px;height:100%;"></div>
         </div>
 
