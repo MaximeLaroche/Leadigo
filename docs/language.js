@@ -1,10 +1,18 @@
 (function () {
     const SUPPORTED = ['en', 'fr', 'es'];
     const FLAGS = [
-        ['en', 'English version', '🇬🇧'],
-        ['fr', 'Version française', '🇫🇷'],
-        ['es', 'Versión en español', '🇪🇸']
+        ['en', 'English version'],
+        ['fr', 'Version française'],
+        ['es', 'Versión en español']
     ];
+    // Inline SVG flags: Windows has no flag glyphs in its emoji font and renders
+    // flag emoji as plain letters (GB/FR/ES), so emoji can't be relied on.
+    // preserveAspectRatio="slice" + the button's overflow:hidden gives a clean circular crop.
+    const FLAG_SVGS = {
+        en: '<svg viewBox="0 0 60 30" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><clipPath id="lg-uk-s"><path d="M0,0 v30 h60 v-30 z"/></clipPath><clipPath id="lg-uk-t"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath><g clip-path="url(#lg-uk-s)"><path d="M0,0 v30 h60 v-30 z" fill="#012169"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" stroke-width="6"/><path d="M0,0 L60,30 M60,0 L0,30" stroke="#C8102E" stroke-width="4" clip-path="url(#lg-uk-t)"/><path d="M30,0 v30 M0,15 h60" stroke="#fff" stroke-width="10"/><path d="M30,0 v30 M0,15 h60" stroke="#C8102E" stroke-width="6"/></g></svg>',
+        fr: '<svg viewBox="0 0 3 2" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><rect width="3" height="2" fill="#0055A4"/><rect x="1" width="1" height="2" fill="#FFFFFF"/><rect x="2" width="1" height="2" fill="#EF4135"/></svg>',
+        es: '<svg viewBox="0 0 3 2" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><rect width="3" height="2" fill="#AA151B"/><rect y="0.5" width="3" height="1" fill="#F1BF00"/></svg>'
+    };
     const ATTRS = ['alt', 'aria-label', 'title'];
     const SKIP_TAGS = ['SCRIPT', 'STYLE', 'NOSCRIPT', 'TITLE'];
     const DEFAULT_THEME = {
@@ -193,8 +201,10 @@
             display: flex; align-items: center; justify-content: center;
             font-size: 0.9rem; line-height: 1; text-decoration: none;
             opacity: 0.55; background: transparent; cursor: pointer; padding: 0;
+            overflow: hidden;
             transition: opacity 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
         }
+        .lang-flag svg { display: block; width: 100%; height: 100%; }
         .lang-flag:hover { opacity: 1; border-color: rgba(96, 165, 250, 0.5); }
         .lang-flag[aria-current="page"] { opacity: 1; border-color: rgba(96, 165, 250, 0.65); background-color: rgba(30, 41, 59, 0.6); }
         html.light .lang-flag { border-color: rgba(15, 23, 42, 0.16); }
@@ -208,10 +218,10 @@
 
     flagsEl = document.createElement('div');
     flagsEl.className = 'lang-flags';
-    FLAGS.forEach(([code, label, flag]) => {
+    FLAGS.forEach(([code, label]) => {
         const button = document.createElement('button');
         button.type = 'button';
-        button.textContent = flag;
+        button.innerHTML = FLAG_SVGS[code];
         button.className = 'lang-flag';
         button.dataset.lang = code;
         button.setAttribute('aria-label', label);

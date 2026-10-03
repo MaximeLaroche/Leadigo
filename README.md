@@ -18,7 +18,7 @@ docs/
 ## How the language system works
 
 - Each page exists **once**, in English. The English text in the HTML is the source of truth.
-- The flag buttons (🇬🇧 🇫🇷 🇪🇸) call `language.js`, which fetches `locales/<lang>.json` and swaps matching text on the page — no reload, and the embedded ROI calculator switches too (parent page passes the language into the iframe).
+- The flag buttons call `language.js`, which fetches `locales/<lang>.json` and swaps matching text on the page — no reload, and the embedded ROI calculator switches too (parent page passes the language into the iframe). The flags are inline SVGs (defined in `language.js`), not emoji, because Windows has no flag glyphs in its emoji font and would show plain letters like "GB" instead.
 - Each JSON file is a simple map: **English source text → translated text**.
 
 ```json
